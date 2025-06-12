@@ -18,9 +18,16 @@ let package = Package(
         .library(name: "MazeSolver", targets: ["MazeSolver"])
     ],
 
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-play-experimental", branch: "main"),
+    ],
+
     targets: [
         .target(
-            name: "MazeSolver"
+            name: "MazeSolver",
+            dependencies: [
+                .product(name: "Playgrounds", package: "swift-play-experimental"),
+            ]
         ),
         .testTarget(
             name: "MazeSolverTests",
