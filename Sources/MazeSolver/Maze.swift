@@ -122,7 +122,13 @@ public final class Maze<ElementType: MazeSquareType>: CustomStringConvertible {
 
         var rows: [String] = []
         do {
-            for try await line in handle.bytes.lines {
+#if os(Linux)
+let lines = handle.asyncLines()
+#else
+let lines = handle.bytes.lines
+#endif
+            //for try await line in handle.bytes.lines {
+            for try await line in lines {
                 rows.append(line)
             }
         } catch {
@@ -380,3 +386,28 @@ extension Maze {
     }
 
 }
+
+#if os(Linux)
+// Workaround for Linux
+extension FileHandle {
+    func asyncLines() -> AsyncThrowingStream<String, Error> {
+        AsyncThrowingStream { continuation in
+            Task {
+                do {
+                    let data = self.readDataToEndOfFile()
+                    let string = String(data: data, encoding: .utf8) ?? ""
+                    let lines = string.components(separatedBy: .newlines)
+                    
+                    for line in lines {
+                        continuation.yield(line)
+                    }
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+            }
+        }
+    }
+}
+#endif
+
