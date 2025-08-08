@@ -46,12 +46,15 @@ enum MyMazeSquareType: Character, MazeSquareType {
 #Playground("Example1") {
     let input = """
     ########
-    #....#E#
-    #.##.#.#
+    #....#.#
+    #.##E#.#
     #S.#...#
     ########
     """
 
+    print("Solving maze:")
+    print(input)
+    print("Solution:")
     let maze = try Maze<MyMazeSquareType>(input: input)
     if let result = maze.findShortestPath() {
         let path = result.path

@@ -394,18 +394,14 @@ extension FileHandle {
     func asyncLines() -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { continuation in
             Task {
-                do {
-                    let data = self.readDataToEndOfFile()
-                    let string = String(data: data, encoding: .utf8) ?? ""
-                    let lines = string.components(separatedBy: .newlines)
-                    
-                    for line in lines {
-                        continuation.yield(line)
-                    }
-                    continuation.finish()
-                } catch {
-                    continuation.finish(throwing: error)
+                let data = self.readDataToEndOfFile()
+                let string = String(data: data, encoding: .utf8) ?? ""
+                let lines = string.components(separatedBy: .newlines)
+                
+                for line in lines {
+                    continuation.yield(line)
                 }
+                continuation.finish()
             }
         }
     }
