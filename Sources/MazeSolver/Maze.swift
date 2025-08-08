@@ -145,6 +145,7 @@ let lines = handle.bytes.lines
             var squaresInRow: [MazeSquare<ElementType>] = []
             for (x, character) in row.enumerated() {
                 guard let squareType = ElementType(rawValue: character) else {
+                    print("Unknown square type: '\(character)'")
                     throw MazeError.unknownSquareType
                 }
 

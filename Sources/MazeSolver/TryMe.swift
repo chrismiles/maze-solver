@@ -43,7 +43,7 @@ enum MyMazeSquareType: Character, MazeSquareType {
 ///
 /// #### Input string
 
-#Playground {
+#Playground("Example1") {
     let input = """
     ########
     #....#E#
@@ -60,6 +60,40 @@ enum MyMazeSquareType: Character, MazeSquareType {
     } else {
         print("No path")
     }
+}
+
+#Playground("Solve Maze") {
+    print("Enter maze with '#' for walls, '.' for floor', 'S' for start and 'E' for end. Hit ^D to solve it.")
+    // Read multi-line input from stdin until EOF
+    var inputLines: [String] = []
+    while let line = readLine() {
+        inputLines.append(line)
+    }
+    let input = inputLines.joined(separator: "\n")
+
+    guard !input.isEmpty else {
+        print("No input provided")
+        return
+    }
+
+    let mazeWidth = inputLines[0].count
+    let mazeHeight = inputLines.count
+    let mazeStr = inputLines.joined(separator: "\n")
+
+    print("Solving maze:")
+    print(mazeStr)
+
+    print("Solution:")
+    let maze = try Maze<MyMazeSquareType>(input: mazeStr)
+    if let result = maze.findShortestPath() {
+        let path = result.path
+        let r = path.asciiGrid(width: mazeWidth, height: mazeHeight, emptyChar: ".")
+        print(r)
+    } else {
+        print("No path")
+    }
+
+    exit(1)
 }
 
 extension Array where Element == Position {
