@@ -83,9 +83,6 @@ enum MyMazeSquareType: Character, MazeSquareType {
     let mazeHeight = inputLines.count
     let mazeStr = inputLines.joined(separator: "\n")
 
-    print("Solving maze:")
-    print(mazeStr)
-
     print("Solution:")
     let maze = try Maze<MyMazeSquareType>(input: mazeStr)
     if let result = maze.findShortestPath() {
@@ -95,9 +92,12 @@ enum MyMazeSquareType: Character, MazeSquareType {
     } else {
         print("No path")
     }
-
-    exit(1)
 }
+
+
+
+
+
 
 extension Array where Element == Position {
     /// Returns an ASCII representation of a grid showing the positions in the array marked with their indices
