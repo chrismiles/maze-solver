@@ -43,11 +43,11 @@ enum MyMazeSquareType: Character, MazeSquareType {
 ///
 /// #### Input string
 
-#Playground("Example1") {
+#Playground {
     let input = """
     ########
-    #....#.#
-    #.##E#.#
+    #....#E#
+    #.##.#.#
     #S.#...#
     ########
     """
@@ -171,3 +171,26 @@ extension Array where Element == Position {
         return result
     }
 }
+
+/// Replaces all occurrences of "private" (case insensitive) in input string with "<redacted>"
+fileprivate func redactMyPrivateThings(_ input: String) -> String {
+    input.replacing(/(?i)private/, with: "<redacted>")
+}
+
+#Playground {
+    print("Hello")
+    let myPrivateThing = "My Private Thing"
+    let redacted = redactMyPrivateThings(myPrivateThing)
+    print(
+        """
+        Private Text:
+        -----------------
+        \(myPrivateThing)
+        
+        Redacted Text:
+        -----------------
+        \(redacted)
+        """
+    )
+}
+

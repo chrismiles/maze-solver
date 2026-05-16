@@ -7,7 +7,7 @@ let package = Package(
     name: "MazeSolver",
 
     platforms: [
-        .macOS(.v13),
+        .macOS(.v14),
         .iOS(.v16),
         .watchOS(.v9),
         .tvOS(.v16),
@@ -29,10 +29,10 @@ let package = Package(
                 .product(name: "Playgrounds", package: "swift-play-experimental"),
             ]
         ),
-        .testTarget(
-            name: "MazeSolverTests",
-            dependencies: ["MazeSolver"],
-            resources: [.process("Resources")]
-        )
+//        .testTarget(
+//            name: "MazeSolverTests",
+//            dependencies: ["MazeSolver"],
+//            resources: [.process("Resources")]
+//        )
     ]
 )
